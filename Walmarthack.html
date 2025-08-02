@@ -1,0 +1,792 @@
+<head>
+    <title>Walmart - Reimagined Customer Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .animate-fade-in-delay-1 {
+            animation: fadeIn 0.8s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+        @keyframes bounceOnce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .animate-bounce-once {
+            animation: bounceOnce 1s ease-in-out;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #0d6efd;
+            animation: spin 1s ease infinite;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-blue-200 text-gray-800 flex flex-col min-h-screen">
+    <div class="hidden">
+      <svg id="send-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></svg>
+      <svg id="bot-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M7 15h10"/></svg>
+      <svg id="user-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <svg id="shopping-bag-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <svg id="leaf-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-leaf"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 20 10.3 20 16a8 8 0 0 1-8 8h-2c-.6 0-1-.4-1-1v-17C10 2.5 10.5 2 11 2h2c.6 0 1 .4 1 1v4c0 .5.4 1 1 1h2c.5 0 1 .4 1 1v3c0 .5.4 1 1 1h2"/></svg>
+      <svg id="shield-check-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucude-shield-check"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+      <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <svg id="x-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      <svg id="mail-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      <svg id="phone-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2.02 15.79 15.79 0 0 1-8.31-4.41 15.79 15.79 0 0 1-4.41-8.31A2 2 0 0 1 .06 2.18L2.08.18a2 2 0 0 1 2.5-.22 14.65 14.65 0 0 0 4.75 1.74 2 2 0 0 1 1.66 2.43 10.87 10.87 0 0 0 .54 2.3 2 2 0 0 1-.45 2.11L8.09 12.09a16 16 0 0 0 8.82 8.82l1.5-1.5a2 2 0 0 1 2.11-.45 10.87 10.87 0 0 0 2.3.54 2 2 0 0 1 2.43 1.66z"/></svg>
+      <svg id="map-pin-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin"><path d="M12 18.7c-3.3 0-6-2.7-6-6s6-12 6-12 6 8.7 6 12-2.7 6-6 6z"/><circle cx="12" cy="10" r="3"/></svg>
+    </div>
+    <div id="app-container" class="flex-1">
+    </div>
+    <header id="app-header" class="bg-white shadow-md p-4 flex flex-col items-center sticky top-0 z-10 rounded-b-xl" style="display: none;">
+        <div class="flex items-center justify-between w-full mb-2">
+            <div class="flex items-center">
+                <div class="w-8 h-8 text-blue-600 mr-2" id="header-shopping-bag-icon"></div>
+                <span class="text-2xl font-bold text-blue-800">Walmart</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative hidden sm:block">
+                    <input type="text" id="search-input" placeholder="Search products..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"/>
+                    <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" id="header-search-icon"></div>
+                </div>
+                <button id="cart-button" class="p-2 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition duration-200 relative">
+                    <div class="w-6 h-6" id="cart-shopping-bag-icon"></div>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                </button>
+                <div id="auth-buttons-container" class="flex items-center space-x-2">
+                </div>
+                <button id="chat-toggle-button" class="p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition duration-200 shadow-md">
+                    <div class="w-6 h-6" id="header-bot-icon"></div>
+                </button>
+            </div>
+        </div>
+        <nav class="flex space-x-6 text-gray-700 font-medium w-full justify-center">
+            <a href="#" id="nav-home" class="hover:text-blue-600 transition duration-200">Home</a>
+            <a href="#" id="nav-shop-all" class="hover:text-blue-600 transition duration-200">Shop</a>
+            <a href="#" id="nav-categories" class="hover:text-blue-600 transition duration-200">Categories</a>
+            <a href="#" id="nav-contact" class="hover:text-blue-600 transition duration-200">Contact</a>
+        </nav>
+    </header>
+    <div id="chat-modal" class="fixed bottom-4 right-4 bg-white rounded-2xl shadow-xl transition-all duration-300 ease-in-out w-16 h-16 overflow-hidden flex flex-col z-20">
+        <button id="chat-open-button" class="w-full h-full flex items-center justify-center p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition duration-200 shadow-lg">
+            <div class="w-8 h-8" id="open-chat-bot-icon"></div>
+        </button>
+        <div id="chat-content" class="h-full w-full flex-col hidden">
+            <div class="flex items-center justify-between p-4 bg-blue-600 text-white rounded-t-2xl">
+                <h2 class="text-lg font-bold flex items-center">
+                    <div class="w-6 h-6 mr-2" id="chat-header-bot-icon"></div> AI Assistant
+                </h2>
+                <button id="chat-close-button" class="p-1 rounded-full hover:bg-blue-700 transition duration-200">
+                    <div class="w-5 h-5" id="chat-close-x-icon"></div>
+                </button>
+            </div>
+            <div id="chat-history" class="flex-1 overflow-y-auto p-4 custom-scrollbar">
+            </div>
+            <div class="p-4 border-t border-gray-200 flex items-center">
+                <input type="text" id="chat-input" class="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-400 text-sm" placeholder="Type your message..."/>
+                <button id="chat-send-button" class="ml-2 p-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition duration-200 ease-in-out transform hover:scale-105">
+                    <div class="w-5 h-5" id="chat-send-icon"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="cart-modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-end z-50 hidden">
+        <div class="bg-white w-full max-w-md h-full shadow-lg flex flex-col rounded-l-2xl">
+            <div class="p-4 border-b border-gray-200 flex items-center justify-between">
+                <h2 class="text-2xl font-bold text-blue-700">Your Cart</h2>
+                <button id="cart-close-button" class="p-2 rounded-full hover:bg-gray-200 transition duration-200">
+                    <div class="w-6 h-6 text-gray-600" id="cart-close-x-icon"></div>
+                </button>
+            </div>
+            <div id="cart-items-container" class="flex-1 overflow-y-auto p-4">
+            </div>
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-lg font-bold text-gray-800">Total:</span>
+                    <span id="cart-total" class="text-2xl font-bold text-blue-700">₹0.00</span>
+                </div>
+                <button class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-0.5">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const State = {
+            currentPage: 'login', 
+            currentUser: null,
+            isRetailer: false,
+            isChatOpen: false,
+            isCartOpen: false,
+            usdToInrRate: 83.50,
+            cartItems: [],
+            chatHistory: [{ type: 'bot', message: "Hi there! I'm your AI shopping assistant. How can I help you today?" }],
+            searchTerm: '',
+            activeCategory: 'All',
+        };
+        const allProducts = [
+            { id: 'p1', name: "Ergonomic Office Chair", price: "$299.99", imageUrl: "https://placehold.co/128x128/A0B0C0/FFFFFF?text=Chair", description: "Designed for maximum comfort and support during long working hours.", isEcoFriendly: false, category: "Furniture" },
+            { id: 'p2', name: "Wireless Bluetooth Headphones", price: "$120.00", imageUrl: "https://placehold.co/128x128/B0C0D0/FFFFFF?text=Headphones", description: "Immersive sound experience with noise cancellation and long battery life.", isEcoFriendly: false, category: "Electronics" },
+            { id: 'p3', name: "Organic Cotton T-Shirt", price: "$35.00", imageUrl: "https://placehold.co/128x128/C0D0E0/FFFFFF?text=Eco+T-Shirt", description: "Soft and breathable, made from 100% organic cotton. Available in multiple colors.", isEcoFriendly: true, category: "Apparel" },
+            { id: 'p4', name: "Recycled PET Backpack", price: "$55.00", imageUrl: "https://placehold.co/128x128/D0E0F0/FFFFFF?text=Recycled+Bag", description: "Durable and stylish backpack made from recycled plastic bottles.", isEcoFriendly: true, category: "Accessories" },
+            { id: 'p5', name: "Smart Home Speaker", price: "$89.99", imageUrl: "https://placehold.co/128x128/E0F0A0/FFFFFF?text=Smart+Speaker", description: "Voice-controlled assistant for music, news, and smart device control.", isEcoFriendly: false, category: "Electronics" },
+            { id: 'p6', name: "Yoga Mat (Natural Rubber)", price: "$45.00", imageUrl: "https://placehold.co/128x128/F0A0B0/FFFFFF?text=Yoga+Mat", description: "Non-slip and eco-friendly yoga mat for your daily practice.", isEcoFriendly: true, category: "Fitness" },
+            { id: 'p7', name: "Classic Leather Wallet", price: "$60.00", imageUrl: "https://placehold.co/128x128/A0C0E0/FFFFFF?text=Wallet", description: "Handcrafted from genuine leather with multiple card slots.", isEcoFriendly: false, category: "Accessories" },
+            { id: 'p8', name: "Portable Power Bank", price: "$30.00", imageUrl: "https://placehold.co/128x128/B0D0F0/FFFFFF?text=Power+Bank", description: "Keep your devices charged on the go with this high-capacity power bank.", isEcoFriendly: false, category: "Electronics" },
+            { id: 'p9', name: "Sustainable Coffee Beans", price: "$18.50", imageUrl: "https://placehold.co/128x128/C0E0A0/FFFFFF?text=Coffee", description: "Ethically sourced, organic coffee beans with rich aroma.", isEcoFriendly: true, category: "Food & Beverage" },
+            { id: 'p10', name: "Noise-Cancelling Earbuds", price: "$150.00", imageUrl: "https://placehold.co/128x128/D0F0B0/FFFFFF?text=Earbuds", description: "Compact earbuds with advanced noise-cancelling technology for clear audio.", isEcoFriendly: false, category: "Electronics" },
+        ];
+        const categories = Array.from(new Set(allProducts.map(p => p.category)));
+        categories.push('Eco-Friendly');
+        const appContainer = document.getElementById('app-container');
+        const appHeader = document.getElementById('app-header');
+        const authButtonsContainer = document.getElementById('auth-buttons-container');
+        const cartCountSpan = document.getElementById('cart-count');
+        const searchInput = document.getElementById('search-input');
+        const chatModal = document.getElementById('chat-modal');
+        const chatContent = document.getElementById('chat-content');
+        const chatHistoryDiv = document.getElementById('chat-history');
+        const chatInput = document.getElementById('chat-input');
+        const chatSendButton = document.getElementById('chat-send-button');
+        const cartModal = document.getElementById('cart-modal');
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const cartTotalSpan = document.getElementById('cart-total');
+        function getIcon(id) {
+            return document.getElementById(id).innerHTML;
+        }
+        function updateCartCount() {
+            const totalItems = State.cartItems.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountSpan.textContent = totalItems;
+            if (totalItems > 0) {
+                cartCountSpan.classList.remove('hidden');
+            } else {
+                cartCountSpan.classList.add('hidden');
+            }
+        }
+        function renderHeader() {
+            if (State.currentPage === 'login' || State.currentPage === 'signup' || State.currentPage === 'retailerDashboard') {
+                appHeader.style.display = 'none';
+                return;
+            }
+            appHeader.style.display = 'flex';
+            document.getElementById('header-shopping-bag-icon').innerHTML = getIcon('shopping-bag-icon');
+            document.getElementById('cart-shopping-bag-icon').innerHTML = getIcon('shopping-bag-icon');
+            document.getElementById('header-search-icon').innerHTML = getIcon('search-icon');
+            document.getElementById('header-bot-icon').innerHTML = getIcon('bot-icon');
+            document.getElementById('chat-toggle-button').style.display = State.isChatOpen ? 'none' : 'block';
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('text-blue-600', 'font-bold');
+            });
+            const activeNav = document.getElementById(`nav-${State.currentPage === 'shop' ? 'shop-all' : State.currentPage}`);
+            if (activeNav) {
+                activeNav.classList.add('text-blue-600', 'font-bold');
+            }
+            authButtonsContainer.innerHTML = '';
+            if (State.currentUser) {
+                const userSpan = document.createElement('span');
+                userSpan.className = "text-gray-700 text-sm font-medium hidden sm:block";
+                userSpan.textContent = `Hi, ${State.currentUser}!`;
+                const logoutButton = document.createElement('button');
+                logoutButton.id = 'logout-button';
+                logoutButton.className = "bg-red-500 hover:bg-red-600 text-white text-sm font-bold py-2 px-4 rounded-lg transition duration-200";
+                logoutButton.textContent = 'Logout';
+                authButtonsContainer.appendChild(userSpan);
+                authButtonsContainer.appendChild(logoutButton);
+            } else {
+                const loginButton = document.createElement('button');
+                loginButton.id = 'login-signup-button';
+                loginButton.className = "bg-green-500 hover:bg-green-600 text-white text-sm font-bold py-2 px-4 rounded-lg transition duration-200";
+                loginButton.textContent = 'Login / Signup';
+                authButtonsContainer.appendChild(loginButton);
+            }
+        }
+        function renderHomePage() {
+            appContainer.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center py-16 px-4 bg-white rounded-xl shadow-lg m-4 sm:m-6">
+                    <h2 class="text-4xl font-extrabold text-blue-800 mb-4 animate-fade-in">
+                        Welcome to Walmart!
+                    </h2>
+                    <p class="text-lg text-gray-700 mb-8 max-w-2xl animate-fade-in-delay-1">
+                        Discover innovative products and experience seamless shopping with our AI-powered assistant.
+                        From smart solutions to sustainable choices, we're reimagining your retail journey.
+                    </p>
+                    <button id="shop-now-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 animate-bounce-once">
+                        Shop Now
+                    </button>
+                    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-3xl">
+                        <div class="bg-blue-50 p-6 rounded-xl shadow-md flex items-center justify-center flex-col text-blue-700">
+                            <div class="w-12 h-12 mb-3">${getIcon('leaf-icon')}</div>
+                            <h3 class="text-xl font-semibold mb-2">Sustainable Future</h3>
+                            <p class="text-sm text-gray-600">Explore eco-friendly products and green retail practices.</p>
+                        </div>
+                        <div class="bg-purple-50 p-6 rounded-xl shadow-md flex items-center justify-center flex-col text-purple-700">
+                            <div class="w-12 h-12 mb-3">${getIcon('shield-check-icon')}</div>
+                            <h3 class="text-xl font-semibold mb-2">Building Trust with AI</h3>
+                            <p class="text-sm text-gray-600">Secure shopping and data safety in a digital-first environment.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('shop-now-button').addEventListener('click', () => {
+                State.currentPage = 'shop';
+                State.activeCategory = 'All';
+                renderApp();
+            });
+        }
+        function renderShopPage() {
+            let filteredProducts = allProducts;
+            if (State.activeCategory !== 'All') {
+                if (State.activeCategory === 'Eco-Friendly') {
+                    filteredProducts = allProducts.filter(p => p.isEcoFriendly);
+                } else {
+                    filteredProducts = allProducts.filter(p => p.category === State.activeCategory);
+                }
+            }
+            if (State.searchTerm) {
+                const term = State.searchTerm.toLowerCase();
+                filteredProducts = filteredProducts.filter(p =>
+                    p.name.toLowerCase().includes(term) ||
+                    p.description.toLowerCase().includes(term) ||
+                    p.category.toLowerCase().includes(term)
+                );
+            }   
+            const categoryButtonsHtml = ['All', ...categories].map(category => `
+                <button
+                    data-category="${category}"
+                    class="px-4 py-2 rounded-lg text-sm font-medium transition duration-200 ${State.activeCategory === category ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
+                >
+                    ${category === 'All' ? 'All Products' : category}
+                </button>
+            `).join('');
+            const productCardsHtml = filteredProducts.length > 0 ? filteredProducts.map(product => {
+                const usdPrice = parseFloat(product.price.replace('$', ''));
+                const inrPrice = (usdPrice * State.usdToInrRate).toFixed(2);
+                return `
+                    <div class="bg-white rounded-xl shadow-lg p-4 flex flex-col items-center text-center transition-transform hover:scale-105 duration-300">
+                        <img src="${product.imageUrl}" alt="${product.name}" class="w-32 h-32 object-cover rounded-md mb-3" onerror="this.src='https://placehold.co/128x128/E0E0E0/333333?text=Product';"/>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-1">${product.name}</h3>
+                        <div class="flex flex-col items-center mb-2">
+                            <p class="text-blue-600 font-bold text-xl">₹${inrPrice}</p>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3 line-clamp-2">${product.description}</p>
+                        ${product.isEcoFriendly ? `<div class="flex items-center text-green-600 text-sm font-medium mb-2"><div class="w-4 h-4 mr-1">${getIcon('leaf-icon')}</div> Eco-Friendly</div>` : ''}
+                        <button data-product-id="${product.id}" class="add-to-cart-button mt-auto bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-0.5">
+                            Add to Cart
+                        </button>
+                    </div>
+                `;
+            }).join('') : `
+                <div class="col-span-full text-center text-gray-500 py-10">
+                    <p>No products found matching your current filters or AI recommendation.</p>
+                    <p class="mt-2 text-sm">Try a different search term, select another category, or ask the AI assistant for help!</p>
+                </div>
+            `;
+            appContainer.innerHTML = `
+                <div class="bg-white shadow-sm p-4 sm:p-6 flex flex-wrap justify-center gap-3 rounded-b-xl">
+                    ${categoryButtonsHtml}
+                </div>
+                <main class="flex-1 p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    ${productCardsHtml}
+                </main>
+            `;            
+            appContainer.querySelectorAll('.add-to-cart-button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = e.target.dataset.productId;
+                    const product = allProducts.find(p => p.id === productId);
+                    if (product) {
+                        addToCart(product);
+                    }
+                });
+            });
+            appContainer.querySelectorAll('[data-category]').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    State.activeCategory = e.target.dataset.category;
+                    State.searchTerm = '';
+                    renderApp();
+                });
+            });
+        }
+        function renderContactPage() {
+            appContainer.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center py-16 px-4 bg-white rounded-xl shadow-lg m-4 sm:m-6">
+                    <h2 class="text-4xl font-extrabold text-blue-800 mb-6">Contact Us</h2>
+                    <p class="text-lg text-gray-700 mb-8 max-w-2xl">
+                        We're here to help! You can reach out to us through the following channels.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-3xl">
+                        <div class="bg-gray-50 p-6 rounded-xl shadow-md flex items-center justify-center flex-col">
+                            <div class="w-12 h-12 text-blue-600 mb-3">${getIcon('mail-icon')}</div>
+                            <h3 class="text-xl font-semibold mb-2">Email Us</h3>
+                            <p class="text-sm text-gray-600">contact@walmart.com</p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl shadow-md flex items-center justify-center flex-col">
+                            <div class="w-12 h-12 text-blue-600 mb-3">${getIcon('phone-icon')}</div>
+                            <h3 class="text-xl font-semibold mb-2">Call Us</h3>
+                            <p class="text-sm text-gray-600">1-800-WALMART</p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl shadow-md flex items-center justify-center flex-col md:col-span-2">
+                            <div class="w-12 h-12 text-blue-600 mb-3">${getIcon('map-pin-icon')}</div>
+                            <h3 class="text-xl font-semibold mb-2">Our Office</h3>
+                            <p class="text-sm text-gray-600">123 Main Street, Anytown, USA</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderLoginPage() {
+            appContainer.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center py-16 px-4 bg-white rounded-xl shadow-lg m-4 sm:m-6 min-h-[60vh]">
+                    <h2 class="text-4xl font-extrabold text-blue-800 mb-6">Login</h2>
+                    <form id="login-form" class="w-full max-w-md bg-gray-50 p-8 rounded-xl shadow-md">
+                        <p id="login-error" class="text-red-500 mb-4 hidden"></p>
+                        <div class="mb-4 text-left">
+                            <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username</label>
+                            <input type="text" id="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-400" placeholder="Enter your username"/>
+                        </div>
+                        <div class="mb-6 text-left">
+                            <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                            <input type="password" id="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-400" placeholder="Enter your password"/>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-200 ease-in-out transform hover:scale-105">Log In</button>
+                            <button type="button" id="nav-to-signup-button" class="inline-block align-baseline font-bold text-sm text-blue-600 hover:text-blue-800">Don't have an account? Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.getElementById('login-form').addEventListener('submit', handleLogin);
+            document.getElementById('nav-to-signup-button').addEventListener('click', () => {
+                State.currentPage = 'signup';
+                renderApp();
+            });
+        }
+
+        function renderSignupPage() {
+            appContainer.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center py-16 px-4 bg-white rounded-xl shadow-lg m-4 sm:m-6 min-h-[60vh]">
+                    <h2 class="text-4xl font-extrabold text-blue-800 mb-6">Sign Up</h2>
+                    <form id="signup-form" class="w-full max-w-md bg-gray-50 p-8 rounded-xl shadow-md">
+                        <p id="signup-error" class="text-red-500 mb-4 hidden"></p>
+                        <div class="mb-4 text-left">
+                            <label for="signup-username" class="block text-gray-700 text-sm font-bold mb-2">Username</label>
+                            <input type="text" id="signup-username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-400" placeholder="Choose a username"/>
+                        </div>
+                        <div class="mb-4 text-left">
+                            <label for="signup-password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                            <input type="password" id="signup-password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-400" placeholder="Choose a password"/>
+                        </div>
+                        <div class="mb-6 text-left">
+                            <label for="confirm-password" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
+                            <input type="password" id="confirm-password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-400" placeholder="Confirm your password"/>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-200 ease-in-out transform hover:scale-105">Sign Up</button>
+                            <button type="button" id="nav-to-login-button" class="inline-block align-baseline font-bold text-sm text-blue-600 hover:text-blue-800">Already have an account? Log In</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.getElementById('signup-form').addEventListener('submit', handleSignup);
+            document.getElementById('nav-to-login-button').addEventListener('click', () => {
+                State.currentPage = 'login';
+                renderApp();
+            });
+        }
+
+        function renderRetailerDashboard() {
+            appContainer.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-center py-16 px-4 bg-gradient-to-br from-green-100 to-blue-100 rounded-xl shadow-lg m-4 sm:m-6 min-h-[60vh]">
+                    <h2 class="text-4xl font-extrabold text-green-800 mb-6">Retailer Dashboard</h2>
+                    <p class="text-lg text-gray-700 mb-8 max-w-2xl">
+                        Welcome, Walmart! Here you can manage your inventory, view sales analytics, and optimize your supply chain.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
+                        <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-center flex-col">
+                            <div class="w-12 h-12 text-blue-600 mb-3">${getIcon('shopping-bag-icon')}</div>
+                            <h3 class="text-xl font-semibold mb-2">Manage Inventory</h3>
+                            <p class="text-sm text-gray-600">Update stock levels and product details.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md flex items-center justify-center flex-col">
+                            <div class="w-12 h-12 text-purple-600 mb-3">${getIcon('shield-check-icon')}</div>
+                            <h3 class="text-xl font-semibold mb-2">Sales Analytics</h3>
+                            <p class="text-sm text-gray-600">Track performance and identify trends.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        function handleLogin(e) {
+            e.preventDefault();
+            const usernameInput = document.getElementById('username').value;
+            const passwordInput = document.getElementById('password').value;
+            const errorElement = document.getElementById('login-error');
+            errorElement.classList.add('hidden');
+
+            if (!usernameInput || !passwordInput) {
+                errorElement.textContent = 'Please enter both username and password.';
+                errorElement.classList.remove('hidden');
+                return;
+            }
+
+            State.currentUser = usernameInput;
+            if (usernameInput === 'walmart' && passwordInput === 'walmart') {
+                State.isRetailer = true;
+                State.currentPage = 'retailerDashboard';
+                addChatMessage({ type: 'bot', message: `Welcome to your Retailer Dashboard, ${usernameInput}!` });
+            } else {
+                State.isRetailer = false;
+                State.currentPage = 'home';
+                addChatMessage({ type: 'bot', message: `Welcome back, ${usernameInput}! How can I assist you today?` });
+            }
+            renderApp();
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const usernameInput = document.getElementById('signup-username').value;
+            const passwordInput = document.getElementById('signup-password').value;
+            const confirmPasswordInput = document.getElementById('confirm-password').value;
+            const errorElement = document.getElementById('signup-error');
+            errorElement.classList.add('hidden');
+
+            if (!usernameInput || !passwordInput || !confirmPasswordInput) {
+                errorElement.textContent = 'All fields are required.';
+                errorElement.classList.remove('hidden');
+                return;
+            }
+            if (passwordInput !== confirmPasswordInput) {
+                errorElement.textContent = 'Passwords do not match.';
+                errorElement.classList.remove('hidden');
+                return;
+            }
+
+            State.currentUser = usernameInput;
+            State.isRetailer = false;
+            State.currentPage = 'home';
+            addChatMessage({ type: 'bot', message: `Welcome, ${usernameInput}! Your account has been created. Let's start shopping!` });
+            renderApp();
+        }
+
+        function handleLogout() {
+            State.currentUser = null;
+            State.isRetailer = false;
+            State.cartItems = [];
+            State.currentPage = 'login';
+            addChatMessage({ type: 'bot', message: "You have been logged out. See you next time!" });
+            renderApp();
+        }
+        function renderChatModal() {
+            document.getElementById('open-chat-bot-icon').innerHTML = getIcon('bot-icon');
+            document.getElementById('chat-header-bot-icon').innerHTML = getIcon('bot-icon');
+            document.getElementById('chat-close-x-icon').innerHTML = getIcon('x-icon');
+            document.getElementById('chat-send-icon').innerHTML = getIcon('send-icon');
+
+            if (State.isChatOpen) {
+                chatModal.classList.remove('w-16', 'h-16');
+                chatModal.classList.add('w-full', 'max-w-sm', 'h-96');
+                document.getElementById('chat-open-button').style.display = 'none';
+                chatContent.classList.remove('hidden');
+                chatContent.classList.add('flex');
+            } else {
+                chatModal.classList.add('w-16', 'h-16');
+                chatModal.classList.remove('w-full', 'max-w-sm', 'h-96');
+                document.getElementById('chat-open-button').style.display = 'flex';
+                chatContent.classList.add('hidden');
+                chatContent.classList.remove('flex');
+            }
+            renderChatHistory();
+        }
+
+        function renderChatHistory() {
+            chatHistoryDiv.innerHTML = State.chatHistory.map(msg => `
+                <div class="flex items-start mb-4 ${msg.type === 'user' ? 'justify-end' : 'justify-start'}">
+                    ${msg.type === 'bot' ? `<div class="flex-shrink-0 mr-3"><div class="w-7 h-7 text-blue-500">${getIcon('bot-icon')}</div></div>` : ''}
+                    <div class="max-w-[75%] p-3 rounded-lg shadow-md ${
+                        msg.type === 'user'
+                            ? 'bg-blue-500 text-white rounded-br-none'
+                            : 'bg-gray-200 text-gray-800 rounded-bl-none'
+                    }">
+                        <p class="text-sm">${msg.message}</p>
+                    </div>
+                    ${msg.type === 'user' ? `<div class="flex-shrink-0 ml-3"><div class="w-7 h-7 text-gray-700">${getIcon('user-icon')}</div></div>` : ''}
+                </div>
+            `).join('');
+            if (State.loading) {
+                chatHistoryDiv.innerHTML += `
+                    <div class="flex justify-start mb-4">
+                        <div class="flex-shrink-0 mr-3">
+                            <div class="w-7 h-7 text-blue-500 spinner"></div>
+                        </div>
+                        <div class="bg-gray-200 text-gray-800 p-3 rounded-lg shadow-md rounded-bl-none">
+                            <p class="text-sm">Typing...</p>
+                        </div>
+                    </div>
+                `;
+            }
+            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
+        }
+
+        function addChatMessage(message) {
+            State.chatHistory.push(message);
+            renderChatHistory();
+        }
+
+        async function callGeminiAPI(prompt, isStructured = false) {
+            let chatHistoryForApi = State.chatHistory.map(msg => ({ role: msg.type, parts: [{ text: msg.message }] }));
+            chatHistoryForApi.push({ role: "user", parts: [{ text: prompt }] });
+
+            const payload = { contents: chatHistoryForApi };
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            if (isStructured) {
+                payload.generationConfig = {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            "productName": { "type": "STRING" },
+                            "insight": { "type": "STRING" }
+                        },
+                        "propertyOrdering": ["productName", "insight"]
+                    }
+                };
+            }
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error(`Gemini API Error: Status ${response.status}, ${response.statusText}`, errorText);
+                    return `I'm sorry, there was an error connecting to the AI assistant. (Status: ${response.status})`;
+                }
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    if (isStructured) {
+                        try {
+                            return JSON.parse(text);
+                        } catch (e) {
+                            console.error("Failed to parse structured JSON from Gemini:", e);
+                            return { error: "Failed to get structured insight." };
+                        }
+                    }
+                    return text;
+                } else {
+                    console.error("Gemini API response structure unexpected:", result);
+                    return "I'm sorry, I couldn't get a response from the AI right now.";
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                return "There was an error connecting to the AI assistant.";
+            }
+        }
+
+        async function handleSendMessage() {
+            const userInput = chatInput.value.trim();
+            if (userInput === '') return;
+
+            addChatMessage({ type: 'user', message: userInput });
+            chatInput.value = '';
+            State.loading = true;
+            renderChatHistory();
+
+            const lowerCaseInput = userInput.toLowerCase();
+            let botResponseText = "I'm still learning! Can you rephrase or ask about products, orders, or sustainability?";
+
+            let productFoundForInsight = allProducts.find(product => lowerCaseInput.includes(product.name.toLowerCase()));
+
+            if (productFoundForInsight) {
+                const insightPrompt = `Given the product "${productFoundForInsight.name}" with description: "${productFoundForInsight.description}", generate a concise, unique selling proposition or a key benefit for a customer. Respond in JSON format with "productName" and "insight" fields.`;
+                const geminiInsightResponse = await callGeminiAPI(insightPrompt, true);
+
+                if (typeof geminiInsightResponse === 'object' && geminiInsightResponse && !geminiInsightResponse.error && geminiInsightResponse.insight) {
+                    botResponseText = `Here's more about the ✨${productFoundForInsight.name}✨:\n\n${productFoundForInsight.description}\n\nAI Insight: "${geminiInsightResponse.insight}"`;
+                } else {
+                    botResponseText = `Here's more about the ${productFoundForInsight.name}:\n\n${productFoundForInsight.description}\n\nI couldn't generate a specific AI insight right now, but it's a great product!`;
+                }
+                State.activeCategory = productFoundForInsight.category;
+                State.currentPage = 'shop';
+            } else {
+                const geminiTextResponse = await callGeminiAPI(userInput);
+                botResponseText = geminiTextResponse;
+
+                let categoryFromAI = '';
+                if (botResponseText.toLowerCase().includes('electronics')) categoryFromAI = 'Electronics';
+                else if (botResponseText.toLowerCase().includes('apparel') || botResponseText.toLowerCase().includes('shoes')) categoryFromAI = 'Apparel';
+                else if (botResponseText.toLowerCase().includes('eco-friendly') || botResponseText.toLowerCase().includes('sustainable')) categoryFromAI = 'Eco-Friendly';
+                else if (botResponseText.toLowerCase().includes('furniture')) categoryFromAI = 'Furniture';
+                else if (botResponseText.toLowerCase().includes('accessories')) categoryFromAI = 'Accessories';
+                else if (botResponseText.toLowerCase().includes('fitness')) categoryFromAI = 'Fitness';
+                else if (botResponseText.toLowerCase().includes('food') || botResponseText.toLowerCase().includes('beverage')) categoryFromAI = 'Food & Beverage';
+
+                if (categoryFromAI) {
+                    State.activeCategory = categoryFromAI;
+                    State.currentPage = 'shop';
+                } else {
+                    State.activeCategory = 'All';
+                    State.currentPage = 'shop';
+                }
+            }
+
+            State.loading = false;
+            addChatMessage({ type: 'bot', message: botResponseText });
+            renderApp();
+        }
+        function renderCartModal() {
+            document.getElementById('cart-close-x-icon').innerHTML = getIcon('x-icon');
+
+            if (State.isCartOpen) {
+                cartModal.classList.remove('hidden');
+                let totalUSD = 0;
+                
+                const cartItemsHtml = State.cartItems.length > 0 ? State.cartItems.map(item => {
+                    const usdPrice = parseFloat(item.price.replace('$', ''));
+                    totalUSD += usdPrice * item.quantity;
+                    const inrPrice = (usdPrice * State.usdToInrRate).toFixed(2);
+                    return `
+                        <div class="flex items-center justify-between border-b border-gray-100 py-3 last:border-b-0">
+                            <div class="flex items-center">
+                                <img src="${item.imageUrl}" alt="${item.name}" class="w-16 h-16 object-cover rounded-md mr-4" onerror="this.src='https://placehold.co/64x64/E0E0E0/333333?text=Item';"/>
+                                <div>
+                                    <h3 class="text-md font-semibold text-gray-800">${item.name}</h3>
+                                    <p class="text-sm text-gray-600">Qty: ${item.quantity}</p>
+                                    <p class="text-blue-600 font-bold">₹${inrPrice}</p>
+                                </div>
+                            </div>
+                            <button data-product-id="${item.id}" class="remove-from-cart-button text-red-500 hover:text-red-700 text-sm font-medium">Remove</button>
+                        </div>
+                    `;
+                }).join('') : `<p class="text-center text-gray-500 mt-10">Your cart is empty.</p>`;
+
+                cartItemsContainer.innerHTML = cartItemsHtml;
+                cartTotalSpan.textContent = `₹${(totalUSD * State.usdToInrRate).toFixed(2)}`;
+
+                cartItemsContainer.querySelectorAll('.remove-from-cart-button').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = e.target.dataset.productId;
+                        removeFromCart(productId);
+                    });
+                });
+            } else {
+                cartModal.classList.add('hidden');
+            }
+        }
+
+        function addToCart(product) {
+            const existingItem = State.cartItems.find(item => item.id === product.id);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                State.cartItems.push({ ...product, quantity: 1 });
+            }
+            updateCartCount();
+            renderCartModal();
+        }
+
+        function removeFromCart(productId) {
+            State.cartItems = State.cartItems.filter(item => item.id !== productId);
+            updateCartCount();
+            renderCartModal();
+        }
+        function renderApp() {
+            renderHeader();
+            renderChatModal();
+            renderCartModal();
+            switch (State.currentPage) {
+                case 'home':
+                    renderHomePage();
+                    break;
+                case 'shop':
+                    renderShopPage();
+                    break;
+                case 'contact':
+                    renderContactPage();
+                    break;
+                case 'login':
+                    renderLoginPage();
+                    break;
+                case 'signup':
+                    renderSignupPage();
+                    break;
+                case 'retailerDashboard':
+                    renderRetailerDashboard();
+                    break;
+            }
+        }
+        window.onload = () => {
+            renderApp();
+            document.getElementById('header-shopping-bag-icon').innerHTML = getIcon('shopping-bag-icon');
+            document.getElementById('cart-shopping-bag-icon').innerHTML = getIcon('shopping-bag-icon');
+        };
+        document.getElementById('nav-home').addEventListener('click', (e) => { e.preventDefault(); State.currentPage = 'home'; renderApp(); });
+        document.getElementById('nav-shop-all').addEventListener('click', (e) => { e.preventDefault(); State.currentPage = 'shop'; State.activeCategory = 'All'; renderApp(); });
+        document.getElementById('nav-categories').addEventListener('click', (e) => { e.preventDefault(); State.currentPage = 'shop'; State.activeCategory = 'All'; renderApp(); });
+        document.getElementById('nav-contact').addEventListener('click', (e) => { e.preventDefault(); State.currentPage = 'contact'; renderApp(); });
+        searchInput.addEventListener('input', (e) => {
+            State.searchTerm = e.target.value;
+            State.activeCategory = 'All';
+            State.currentPage = 'shop';
+            renderApp();
+        });
+        document.getElementById('chat-toggle-button').addEventListener('click', () => { State.isChatOpen = true; renderApp(); });
+        document.getElementById('chat-close-button').addEventListener('click', () => { State.isChatOpen = false; renderApp(); });
+        chatSendButton.addEventListener('click', handleSendMessage);
+        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSendMessage(); });
+        document.getElementById('cart-button').addEventListener('click', () => { State.isCartOpen = true; renderApp(); });
+        document.getElementById('cart-close-button').addEventListener('click', () => { State.isCartOpen = false; renderApp(); });
+        document.getElementById('auth-buttons-container').addEventListener('click', (e) => {
+            if (e.target.id === 'login-signup-button') {
+                State.currentPage = 'login';
+                renderApp();
+            } else if (e.target.id === 'logout-button') {
+                handleLogout();
+            }
+        });
+    </script>
+</body>
+</html>
